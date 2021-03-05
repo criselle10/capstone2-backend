@@ -9,6 +9,17 @@ module.exports.add = (reqBody) => {
 
     })
     return course.save()
-    .then(() => true)
-    .catch(() => false)
+        .then(() => true)
+        .catch(() => false)
+}
+
+module.exports.getAll = () => {
+    return Course.find({ isActive: true }).then(courses => {
+        return courses
+    })
+}
+
+module.exports.archive = courseId => {
+    return Course.findByIdAndUpdate(courseId, { isActive: false })
+        .then(() => true)
 }
