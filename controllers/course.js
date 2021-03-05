@@ -23,3 +23,16 @@ module.exports.archive = courseId => {
     return Course.findByIdAndUpdate(courseId, { isActive: false })
         .then(() => true)
 }
+
+module.exports.get = courseId => {
+    return Course.findById(courseId).then((course) => course)
+};
+
+module.exports.update = reqBody => {
+    return Course.findByIdAndUpdate(reqBody._id, {
+            name: reqBody.name,
+            description: reqBody.description,
+            price: reqBody.price
+        }).then(() => true)
+        .catch(() => false)
+}
