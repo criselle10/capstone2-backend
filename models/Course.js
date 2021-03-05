@@ -10,7 +10,7 @@ const courseSchema = new mongoose.Schema({
     },
     price: {
         type: Number,
-        requiredd: [true, 'Course name is required']
+        requiredd: [true, 'Course price is required']
     },
     isActive: {
         type: Boolean,

@@ -22,6 +22,8 @@ app.use(express.json());
 const coursesRoutes = require('./routes/course');
 app.use('/api/courses', coursesRoutes)
 
+const userRoutes = require('./routes/user');
+app.use('/api/users', userRoutes)
 
 app.listen(port, () => {
     console.log(`App is listening on port ${port}`)
