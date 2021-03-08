@@ -23,9 +23,6 @@ module.exports.register = (params) => {
 }
 
 module.exports.login = (params) => {
-    // return bcrypt.hash(params.password, 10).then(function(hash) {
-    //     // Store hash in your password DB.
-    // });
     let { email, password } = params;
     // check email in the DB
     return User.findOne({ email })
@@ -46,3 +43,20 @@ module.exports.login = (params) => {
             }
         })
 }
+
+module.exports.details = (id) => {
+    return User.findById(id, { password: 0 }).then(user => user)
+}
+
+module.exports.enroll = (id) => {
+        return User.findByIdAndUpdate(id.userId, {
+                    $push: { enrollments: { courseId: id.courseId } }
+                    .then coure.findByIdAndUpdate(id.courseId, {
+                        $push: { enrollees: { userId: id.userId } }
+                    })
+                    .then(course => {
+                        return true
+                    })
+                    .catch(err => false)
+
+                }
