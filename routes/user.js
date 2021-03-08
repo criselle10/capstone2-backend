@@ -24,12 +24,11 @@ router.get('/details', auth.verify, (req, res) => {
 })
 
 // enroll// enroll student
-router.get('/enroll', auth.verify, (req, res) => {
-    let id = {
+router.post('/enroll', auth.verify, (req, res) => {
+    UserController.enroll({
         userId: req.decodedToken.id,
-        courseId: req.body.id
-    }
-    UserController.enroll(id).then(result => res.send(result))
+        courseId: req.body.courseId
+    }).then(result => res.send(result))
 })
 
 module.exports = router;

@@ -1,4 +1,5 @@
 const User = require('./../models/User');
+const Course = require('./../models/Course');
 const bcrypt = require('bcrypt');
 const auth = require('./../auth');
 
@@ -48,15 +49,67 @@ module.exports.details = (id) => {
     return User.findById(id, { password: 0 }).then(user => user)
 }
 
-module.exports.enroll = (id) => {
-        return User.findByIdAndUpdate(id.userId, {
-                    $push: { enrollments: { courseId: id.courseId } }
-                    .then coure.findByIdAndUpdate(id.courseId, {
-                        $push: { enrollees: { userId: id.userId } }
-                    })
+module.exports.enroll = (params) => {
+    console.log(params.courseId)
+    return User.findById(params.userId)
+        .then(user => {
+            user.enrollments.push({ courseId: params.courseId })
+            return user.save().then(() => {
+                return Course.findById(params.courseId)
                     .then(course => {
-                        return true
-                    })
-                    .catch(err => false)
+                        course.enrollees.push({ userId: params.userId })
+                        return course.save().then(() => {
+                            return true
+                        }).catch(() => false)
+                    }).catch(() => false)
+            }).catch(() => false)
+        }).catch(() => false)
 
-                }
+
+    // ================================================
+
+    // return User.findById(params.userId)
+    // .then( user => {
+    //  user.enrollments.push({courseId: params.courseId})
+    //  return user.save()
+    // })
+    // .then(() => {
+    //  return Course.findById(params.courseId)
+    // })
+    // .then( course => {
+    //  course.enrollees.push({userId: params.userId})
+    //  return course.save()
+    // })
+    // .then(() => true)
+    // .catch(() => false)
+
+    // ===============================================
+
+    // return User.findByIdAndUpdate(params.userId,{
+    //  $push : { enrollments : { courseId : params.courseId}}
+    // }).then( () =>{
+    //  return Course.findByIdAndUpdate(params.courseId, {
+    //      $push : { enrollees: { userId: params.userId}}
+    //  })
+    // }).then(()=> true)
+    // .catch(() => false)
+
+
+    // ============================================
+    // return Course.findById(params.courseId)
+    // console.log(params.courseId)
+    // console.log(params.userId)
+    //     .then(course => {
+    //         if (!course) return false;
+    //         return User.findByIdAndUpdate(params.userId, {
+    //             $push: { enrollments: { courseId: params.courseId } }
+    //         })
+    //     })
+    //     .then(() => {
+    //         return Course.findByIdAndUpdate(params.courseId, {
+    //             $push: { enrollees: { userId: params.userId } }
+    //         })
+    //     }).then(() => true)
+    //     .catch(() => false)
+
+}
