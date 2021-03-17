@@ -14,6 +14,10 @@ mongoose.connect(process.env.DB_CONN, {
 mongoose.connection.on('error', () => { console.log("Error connecting to DB.") })
 mongoose.connection.once('open', () => { console.log("Connected to DB!") });
 
+app.use((req, res, next) => {
+    // console.log(new Date())
+    next();
+})
 
 //MIDDLEWARE
 app.use(cors())
