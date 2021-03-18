@@ -13,6 +13,11 @@ router.get('/', (req, res) => {
     CourseController.getAll().then(courses => res.send(courses))
 });
 
+//get all for admin use
+router.get('/view', (req, res) => {
+    CourseController.getAllCourses().then(courses => res.send(courses))
+});
+
 //delete course
 router.delete('/:courseId', auth.verify, (req, res) => {
     CourseController.archive(req.params.courseId).then(course => res.send(course))

@@ -19,6 +19,13 @@ module.exports.getAll = () => {
     })
 }
 
+//for admin use
+module.exports.getAllCourses = () => {
+    return Course.find().then(courses => {
+        return courses
+    })
+}
+
 module.exports.archive = courseId => {
     return Course.findByIdAndUpdate(courseId, { isActive: false })
         .then(() => true)
