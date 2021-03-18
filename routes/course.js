@@ -18,9 +18,14 @@ router.get('/view', (req, res) => {
     CourseController.getAllCourses().then(courses => res.send(courses))
 });
 
-//delete course
+//delete course/disabling
 router.delete('/:courseId', auth.verify, (req, res) => {
     CourseController.archive(req.params.courseId).then(course => res.send(course))
+})
+
+//enable course
+router.post('/:courseId', auth.verify, (req, res) => {
+    CourseController.active(req.params.courseId).then(course => res.send(course))
 })
 
 //get specific course

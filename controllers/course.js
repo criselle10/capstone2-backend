@@ -26,9 +26,17 @@ module.exports.getAllCourses = () => {
     })
 }
 
+//disabling
 module.exports.archive = courseId => {
     return Course.findByIdAndUpdate(courseId, { isActive: false })
         .then(() => true)
+}
+
+//enabling
+module.exports.active = courseId => {
+    return Course.findByIdAndUpdate(courseId, { isActive: true })
+        .then(() => true)
+        .catch(() => false)
 }
 
 module.exports.get = courseId => {
